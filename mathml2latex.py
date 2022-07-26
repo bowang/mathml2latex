@@ -40,7 +40,8 @@ def convert(text):
         latex_text = unicode2latex(latex_block)
         text = text.replace('<!--[if mathML]>' + mathml_block + '<![endif]-->', latex_text)
     # Remove multiple consecutive blank lines
-    text = re.sub(r'\n\n', '\n', text).sub(r'\n\n', '\n', text)
+    for _ in range(2):
+        text = re.sub(r'\n\n', '\n', text)
     return text
 
 def main():
