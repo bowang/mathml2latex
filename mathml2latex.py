@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from lxml import etree
 import re
 import os
 import sys
+from lxml import etree
 from unicode_map import unicode_map
 
 def mathml2latex(mathml_block):
@@ -23,13 +23,13 @@ def unicode2latex(latex_block):
     latex_text = str(latex_block, 'utf-8').encode('ascii', 'backslashreplace')
     for utf_code, latex_code in unicode_map.items():
         latex_text = str(latex_text).replace(utf_code, latex_code)
-    latex_text = latex_text.replace('\\\\', '\\')
-    latex_text = re.sub(r'\\textcolor\[rgb\]\{[0-9.,]+\}', '', latex_text)
-    latex_text = latex_text.replace('\\ ~\\ ', '{\\sim}')
-    latex_text = latex_text[len('b\''):][:-len('\'')]
-    latex_text = re.sub(r'^\$ ', '$', latex_text)
-    latex_text = latex_text.replace('{\\ }', '\\ ')
-    latex_text = re.sub(r' \}', '}', latex_text)
+    latex_text = latex_text.replace('\\\\', '\\')                          # "\\" --> "\"
+    latex_text = re.sub(r'\\textcolor\[rgb\]\{[0-9.,]+\}', '', latex_text) # "\textcolor[rgb]{...}" --> ""
+    latex_text = latex_text.replace('\\ ~\\ ', '{\\sim}')                  # " ~ " --> "{\sim}"
+    latex_text = latex_text[len('b\''):][:-len('\'')]                      # b'...' --> ...
+    latex_text = re.sub(r'^\$ ', '$', latex_text)                          # "$ " --> "$"
+    latex_text = latex_text.replace('{\\ }', '\\ ')                        # "{ }" --> " "
+    latex_text = re.sub(r' \}', '}', latex_text)                           # " }" --> "}"
     latex_text = latex_text.replace('\\n\\[\\n\\t', '$$').replace('\\n\\]', '$$')
     return latex_text
 
@@ -39,6 +39,8 @@ def convert(text):
         latex_block = mathml2latex(mathml_block)
         latex_text = unicode2latex(latex_block)
         text = text.replace('<!--[if mathML]>' + mathml_block + '<![endif]-->', latex_text)
+    # Remove multiple consecutive blank lines
+    text = re.sub(r'\n\n', '\n', text).sub(r'\n\n', '\n', text)
     return text
 
 def main():
