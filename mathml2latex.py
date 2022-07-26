@@ -28,9 +28,9 @@ def unicode2latex(latex_block):
     latex_text = latex_text.replace('\\ ~\\ ', '\\sim')
     latex_text = latex_text[len('b\''):][:-len('\'')]
     latex_text = re.sub(r'^\$ ', '$', latex_text)
+    latex_text = latex_text.replace('{\\ }', '\\ ')
     latex_text = re.sub(r' \}', '}', latex_text)
     latex_text = latex_text.replace('\\n\\[\\n\\t', '$$').replace('\\n\\]', '$$')
-    latex_text = latex_text.replace('\\left', '').replace('\\right', '')
     return latex_text
 
 def convert(text):
