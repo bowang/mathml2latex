@@ -25,7 +25,7 @@ def unicode2latex(latex_block):
         latex_text = str(latex_text).replace(utf_code, latex_code)
     latex_text = latex_text.replace('\\\\', '\\')
     latex_text = re.sub(r'\\textcolor\[rgb\]\{[0-9.,]+\}', '', latex_text)
-    latex_text = latex_text.replace('\\ ~\\ ', '\\sim')
+    latex_text = latex_text.replace('\\ ~\\ ', '{\\sim}')
     latex_text = latex_text[len('b\''):][:-len('\'')]
     latex_text = re.sub(r'^\$ ', '$', latex_text)
     latex_text = latex_text.replace('{\\ }', '\\ ')
