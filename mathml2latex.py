@@ -22,10 +22,13 @@ def unicode2latex(latex_block):
     for utf_code, latex_code in unicode_map.items():
         latex_text = str(latex_text).replace(utf_code, latex_code)
     latex_text = latex_text.replace('\\\\', '\\')
-    latex_text = re.sub(r"\\textcolor\[rgb\]\{[0-9.,]+\}", '', latex_text)
+    latex_text = re.sub(r'\\textcolor\[rgb\]\{[0-9.,]+\}', '', latex_text)
+    latex_text = latex_text.replace('\\ ~\\ ', '\\sim ')
     latex_text = latex_text[len('b\''):][:-len('\'')]
-    latex_text = latex_text.replace('\\n\\[\\n\\t', '\\[')
-    latex_text = latex_text.replace('\\n\\]', '\\]')
+    latex_text = re.sub(r'^\$ ', '$', latex_text)
+    latex_text = re.sub(r' \}', '}', latex_text)
+    latex_text = latex_text.replace('\\n\\[\\n\\t', '$$').replace('\\n\\]', '$$')
+    latex_text = latex_text.replace('\\left', '').replace('\\right', '')
     return latex_text
 
 def convert(text):
