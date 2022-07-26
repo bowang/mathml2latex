@@ -8,7 +8,9 @@ import sys
 from unicode_map import unicode_map
 
 def mathml2latex(mathml_block):
-    """ MathML to LaTeX conversion with XSLT from Vasil Yaroshevich """
+    # Preprocess to remove aliases
+    mathml_block = mathml_block.replace('<<', '&lt;<').replace('>>', '>&gt;')
+    # MathML to LaTeX conversion with XSLT from Vasil Yaroshevich
     script_base_path = os.path.dirname(os.path.realpath(__file__))
     xslt_file = os.path.join(script_base_path, 'mmltex', 'mmltex.xsl')
     dom = etree.fromstring(mathml_block)
@@ -23,7 +25,7 @@ def unicode2latex(latex_block):
         latex_text = str(latex_text).replace(utf_code, latex_code)
     latex_text = latex_text.replace('\\\\', '\\')
     latex_text = re.sub(r'\\textcolor\[rgb\]\{[0-9.,]+\}', '', latex_text)
-    latex_text = latex_text.replace('\\ ~\\ ', '\\sim ')
+    latex_text = latex_text.replace('\\ ~\\ ', '\\sim')
     latex_text = latex_text[len('b\''):][:-len('\'')]
     latex_text = re.sub(r'^\$ ', '$', latex_text)
     latex_text = re.sub(r' \}', '}', latex_text)
