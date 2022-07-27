@@ -7,17 +7,17 @@ import sys
 from lxml import etree
 from unicode_map import unicode_map
 
+# MathML to LaTeX conversion with XSLT from Vasil Yaroshevich
+base_path = os.path.dirname(os.path.realpath(__file__))
+xslt_file = os.path.join(base_path, 'mmltex', 'mmltex.xsl')
+xslt = etree.parse(xslt_file)
+transform = etree.XSLT(xslt)
+
 def mathml2latex(mathml_block):
     # Preprocess to remove aliases
     mathml_block = mathml_block.replace('<<', '&lt;<').replace('>>', '>&gt;')
-    # MathML to LaTeX conversion with XSLT from Vasil Yaroshevich
-    script_base_path = os.path.dirname(os.path.realpath(__file__))
-    xslt_file = os.path.join(script_base_path, 'mmltex', 'mmltex.xsl')
     dom = etree.fromstring(mathml_block)
-    xslt = etree.parse(xslt_file)
-    transform = etree.XSLT(xslt)
-    newdom = transform(dom)
-    return newdom
+    return transform(dom)
 
 def unicode2latex(latex_block):
     latex_text = str(latex_block, 'utf-8').encode('ascii', 'backslashreplace')
