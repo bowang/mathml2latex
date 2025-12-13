@@ -5,7 +5,7 @@ import re
 import os
 import sys
 from lxml import etree
-from unicode_map import unicode_map
+from .unicode_map import unicode_map
 
 # MathML to LaTeX conversion with XSLT from Vasil Yaroshevich
 base_path = os.path.dirname(os.path.realpath(__file__))
