@@ -250,7 +250,7 @@ unicode_map = {
     # Mathematical Double-Struck
     '\\U0001d538': '\\mathbb{A}',
     '\\U0001d539': '\\mathbb{B}',
-    '\\u2103'    : '\\mathbb{C}',
+    '\\u2102'    : '\\mathbb{C}',
     '\\U0001d53b': '\\mathbb{D}',
     '\\U0001d53c': '\\mathbb{E}',
     '\\U0001d53d': '\\mathbb{F}',
